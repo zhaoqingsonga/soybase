@@ -4,7 +4,7 @@ get_locus_marker<-function(mychoosed_data=mychoosed){
   mym<-mym[str_detect(mym,"")]
   return(mym)
 }
-## get the reduced marker, To draw finely
+## get the reduced marker To draw finely
 get_reduced_marker<-function(mymap=jymap3943,distance=20){
   #reduce marker
   choosedmarker2<-mymap$marker[floor((mymap$cm/distance))-c(floor(mymap$cm/distance)[-1],NA)!=0]
