@@ -172,7 +172,27 @@ extract_data_new_NI<-function(myd){
   names(md1)<-str_replace(names(md1)," ","-")
   return(md1)
 }
-##----------------------------------------------------------------
+##---------------------------------------------------------------
+##convert gene version from 1 to 2 or 2 to 1
+convert_gene<-function(gene=c("Glyma05g34000")){
+  g1_2<-gene1.1_2.0[gene1.1_2.0$Glyma1.1%in%gene,]
+  g2_1<-gene1.1_2.0[gene1.1_2.0$Glyma1.1%in%gene,]
+  rm<-rbind(g1_2,g2_1)
+  return(rm)
+}
+
+
+##--------------------------------------------------
+get_traits_anotation<-function(trait="isoflavone"){
+  tra<-read.csv("./geneAnotation2.csv",encoding = "UTF-8")
+  trait<-str_to_lower(trait)
+  hit2<-str_to_lower(tra$Top_Uniref100_BLASTP_Hit_.2.)
+  hit3<-str_to_lower(tra$Top_Descriptive_Uniref100_BLASTP_Hit_.3.)
+  hit4<-str_to_lower(tra$Top_Arabidopsis_.TAIR10._BLASTP_Hit_.4.)
+  tra<-tra[str_detect(hit2,trait)|str_detect(hit3,trait)|str_detect(hit4,trait),]
+  ga<-merge(gene1.1_2.0,tra,by.x="Glyma2.0",by.y="Gmax_2.0_Primary_Protein_ID_.1.")
+  return(ga)
+}
 
 
 
